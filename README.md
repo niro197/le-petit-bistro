@@ -18,3 +18,9 @@ Le hero fonctionne sans image grâce à l’illustration CSS. Pour ajouter des p
 Publier sur GitHub Pages ou Netlify, configurer le domaine dans `canonical`, Open Graph, `robots.txt` et `sitemap.xml`, puis tester le formulaire. Vérifier les conditions du plan gratuit du service choisi.
 
 Les pages juridiques sont à ajouter et à valider avant publication ; un modèle ne remplace pas un avis juridique.
+
+## Commande en ligne / click and collect
+
+La section  propose un panier côté navigateur avec filtres par catégorie, ajout et retrait d’articles, choix retrait ou livraison, date, créneau et coordonnées. Les prix restent des marqueurs  pour éviter d’inventer les tarifs. Le bouton final est une demande de commande : aucun paiement n’est activé. Pour la production, connecter le formulaire à un backend ou à un service de commande, puis ajouter un prestataire de paiement si nécessaire.
+
+Un aperçu visuel a été généré dans  à la racine de l’environnement de travail.
