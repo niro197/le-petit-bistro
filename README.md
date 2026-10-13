@@ -24,3 +24,9 @@ Les pages juridiques sont à ajouter et à valider avant publication ; un modèl
 La section `#commande` propose un panier côté navigateur avec filtres par catégorie, ajout et retrait d’articles, choix retrait ou livraison, date, créneau et coordonnées. Les prix restent des marqueurs `[XX €]` pour éviter d’inventer les tarifs. Le bouton final est une demande de commande : aucun paiement n’est activé. Pour la production, connecter le formulaire à un backend ou à un service de commande, puis ajouter un prestataire de paiement si nécessaire.
 
 Un aperçu visuel a été généré dans `le-petit-bistro-preview.png` à la racine de l’environnement de travail.
+
+## Avis clients et contact
+
+La section `#avis` contient trois cartes d’avis avec marqueurs visibles à remplacer par des témoignages vérifiés et autorisés. Aucun avis n’est présenté comme réel par défaut.
+
+La section `#contact` contient un formulaire indépendant de la réservation et de la commande : nom, e-mail, sujet et message. Remplacer `[À REMPLACER : identifiant-contact]` par un formulaire Formspree ou connecter un service backend équivalent.
