@@ -1,0 +1,39 @@
+{
+  "currency": "EUR",
+  "payment_mode": "quote",
+  "products": [
+    {
+      "id": "ui-gradient-button",
+      "name": "UI Gradient Button",
+      "category": "Composant UI",
+      "price_label": "Sur devis",
+      "stripe_payment_link": "",
+      "description": "Un bouton d’action lumineux avec variantes de couleur, états hover et focus accessibles.",
+      "deliverables": ["HTML", "CSS", "Variantes de couleur", "États hover et focus"],
+      "preview": "gradient-button",
+      "featured": true
+    },
+    {
+      "id": "aurora-card",
+      "name": "Aurora Card",
+      "category": "Carte UI",
+      "price_label": "Sur devis",
+      "stripe_payment_link": "",
+      "description": "Une carte éditoriale avec halo aurora, hiérarchie claire et structure facile à personnaliser.",
+      "deliverables": ["HTML", "CSS", "Version responsive", "Documentation d’utilisation"],
+      "preview": "aurora-card",
+      "featured": true
+    },
+    {
+      "id": "motion-hero",
+      "name": "Motion Hero",
+      "category": "Section de page",
+      "price_label": "Sur devis",
+      "stripe_payment_link": "",
+      "description": "Un hero de landing page avec accroche, CTA, animation légère et composition orientée conversion.",
+      "deliverables": ["HTML", "CSS", "JavaScript léger", "Adaptation mobile"],
+      "preview": "motion-hero",
+      "featured": false
+    }
+  ]
+}

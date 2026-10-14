@@ -1,40 +1,14 @@
-# Studio Projet
 
-Portfolio commercial statique pour présenter et vendre des projets digitaux : sites vitrine, landing pages, identités et boutiques.
+## Boutique de produits UI
 
-## Direction artistique
+Les produits vendables sont séparés du code de la page dans `catalogue/produits.json`. Pour ajouter ou modifier un produit, changer uniquement ce fichier : nom, catégorie, description, livrables, prix et lien Stripe.
 
-- Palette : encre `#15131D`, papier `#F5F3EE`, corail `#EC6A52`, jaune `#F4C84E`, lilas `#D7CCF8`, menthe `#B8DBC9`.
-- Typographie : Space Grotesk pour les titres, DM Sans pour le texte.
-- Une composition d’écrans abstraits ouvre la page ; les projets sont présentés comme un catalogue avec filtres et fiches interactives.
+La logique de boutique est dans `js/store.js` :
 
-## Fonctionnalités
+- chargement du catalogue JSON ;
+- filtres par catégorie ;
+- ajout, retrait et quantité dans le panier ;
+- préparation d’une demande de commande ;
+- emplacement prévu pour un lien de paiement Stripe par produit.
 
-- Filtres par type de projet.
-- Modale interactive pour les détails de chaque projet.
-- Formulaire « Demander une proposition ».
-- Navigation responsive et menu mobile.
-- SEO de base, Open Graph, JSON-LD, favicon, sitemap et robots.txt.
-- Pages modèles pour mentions légales et confidentialité.
-
-## Personnalisation rapide
-
-Rechercher dans le projet :
-
-```text
-[À REMPLACER
-```
-
-Puis remplacer le nom du studio, e-mail, téléphone, ville, réseaux sociaux, projets, contenus, délais, domaine et informations juridiques.
-
-Les projets de démonstration sont clairement identifiés dans `index.html`. Remplacez-les par vos vrais projets avant de vendre le site.
-
-## Formulaire
-
-Le formulaire est prêt pour Formspree. Remplacer `[À REMPLACER : identifiant-contact]` dans `index.html`, puis tester la réception. Un site statique n’envoie pas d’e-mail seul.
-
-## Mise en ligne
-
-Le dépôt peut être publié sur GitHub Pages, Netlify ou Cloudflare Pages. Remplacer le domaine dans `canonical`, les balises Open Graph, `robots.txt` et `sitemap.xml`. Vérifier les conditions et limites du plan choisi.
-
-Consulter `GUIDE_CLIENT.md` pour le mode d’emploi détaillé destiné à la vente et à la livraison du site.
+Le mode actuel est `quote` / **Sur devis**. Pour activer un vrai paiement Stripe, renseigner `stripe_payment_link` avec un Payment Link Stripe réel après avoir fixé les prix et les livrables. Ne jamais mettre de clé secrète Stripe dans le HTML ou le JavaScript public.
