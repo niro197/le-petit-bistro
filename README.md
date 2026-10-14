@@ -16,3 +16,13 @@ Le mode actuel est `quote` / **Sur devis**. Pour activer un vrai paiement Stripe
 ## Recherche et filtres
 
 La boutique comprend maintenant une recherche instantanée par nom, catégorie, description et livrables. Elle fonctionne avec les filtres de catégorie et met à jour le compteur de résultats sans recharger la page.
+
+## Paiement Stripe et livraison sécurisée
+
+Les 19 produits ont maintenant des Payment Links Stripe **en mode test**. Ils redirigent avec `{CHECKOUT_SESSION_ID}` vers `success.html`. Le dossier `server/` contient une API Node complète : signature webhook Stripe, vérification `payment_status=paid`, SQLite, expiration des téléchargements et envoi du ZIP sans exposer directement le fichier.
+
+Avant mise en production : déployer `server/` sur un hébergement Node HTTPS avec volume persistant, renseigner `server/.env`, configurer le webhook Stripe et remplacer `data-api-base` dans `success.html`. Les liens `buy.stripe.com/test_...` doivent être remplacés par des liens Live.
+
+## Aperçus interactifs
+
+Chaque carte propose maintenant un bouton **Aperçu**. La modale affiche le composant, sa catégorie, sa description, son prix et son bouton d’achat. Le bouton `Échap` et le clic sur le fond ferment la modale.

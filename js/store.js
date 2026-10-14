@@ -39,10 +39,39 @@ function renderProducts() {
   if (resultLabel) resultLabel.textContent = `${visible.length} produit${visible.length > 1 ? 's' : ''} affiché${visible.length > 1 ? 's' : ''} sur ${products.length}`;
   productGrid.innerHTML = visible.length ? visible.map((product) => {
     const canBuy = Boolean(product.stripe_payment_link);
-    return `<article class="shop-product" data-product-id="${product.id}">${previewMarkup[product.preview] || ''}<div class="shop-product-body"><span class="product-category">${product.category}</span><h3>${product.name}</h3><p>${product.description}</p><div class="product-meta"><strong>${product.price_label}</strong><div class="product-actions"><a class="buy-product${canBuy ? '' : ' is-pending'}" ${canBuy ? `href="checkout.html?product=${encodeURIComponent(product.id)}"` : 'aria-disabled="true"'}>${canBuy ? 'Acheter' : 'Stripe à configurer'}</a><button type="button" class="add-to-cart" data-add-product="${product.id}">Ajouter</button></div></div><details><summary>Ce qui est inclus <span>+</span></summary><ul>${product.deliverables.map((item) => `<li>${item}</li>`).join('')}</ul></details></div></article>`;
+    return `<article class="shop-product" data-product-id="${product.id}">${previewMarkup[product.preview] || ''}<div class="shop-product-body"><span class="product-category">${product.category}</span><h3>${product.name}</h3><p>${product.description}</p><div class="product-meta"><strong>${product.price_label}</strong><div class="product-actions"><button type="button" class="preview-product" data-preview-product="${product.id}">Aperçu</button><a class="buy-product${canBuy ? '' : ' is-pending'}" ${canBuy ? `href="checkout.html?product=${encodeURIComponent(product.id)}"` : 'aria-disabled="true"'}>${canBuy ? 'Acheter' : 'Stripe à configurer'}</a><button type="button" class="add-to-cart" data-add-product="${product.id}">Ajouter</button></div></div><details><summary>Ce qui est inclus <span>+</span></summary><ul>${product.deliverables.map((item) => `<li>${item}</li>`).join('')}</ul></details></div></article>`;
   }).join('') : '<p class="catalog-error">Aucun produit ne correspond à cette recherche.</p>';
   productGrid.querySelectorAll('[data-add-product]').forEach((button) => button.addEventListener('click', () => addToCart(button.dataset.addProduct)));
+  productGrid.querySelectorAll('[data-preview-product]').forEach((button) => button.addEventListener('click', () => openPreview(button.dataset.previewProduct)));
 }
+
+function openPreview(id) {
+  const product = products.find((item) => item.id === id);
+  const modal = document.querySelector('#component-preview');
+  if (!product || !modal) return;
+  modal.querySelector('[data-preview-stage]').innerHTML = previewMarkup[product.preview] || '';
+  modal.querySelector('[data-preview-category]').textContent = product.category;
+  modal.querySelector('[data-preview-title]').textContent = product.name;
+  modal.querySelector('[data-preview-description]').textContent = product.description;
+  modal.querySelector('[data-preview-price]').textContent = product.price_label;
+  modal.querySelector('[data-preview-buy]').href = `checkout.html?product=${encodeURIComponent(product.id)}`;
+  modal.hidden = false;
+  document.body.classList.add('modal-open');
+  modal.querySelector('[data-preview-close]').focus();
+}
+
+function closePreview() {
+  const modal = document.querySelector('#component-preview');
+  if (!modal) return;
+  modal.hidden = true;
+  document.body.classList.remove('modal-open');
+}
+
+document.querySelector('[data-preview-close]')?.addEventListener('click', closePreview);
+document.querySelector('[data-preview-backdrop]')?.addEventListener('click', closePreview);
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closePreview();
+});
 
 searchInput?.addEventListener('input', () => {
   searchTerm = searchInput.value;

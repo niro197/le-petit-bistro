@@ -1,13 +1,13 @@
 {
   "currency": "USD",
-  "payment_mode": "stripe_live_pending",
+  "payment_mode": "stripe_test_secure_download",
   "products": [
     {
       "id": "ui-gradient-button",
       "name": "UI Gradient Button",
       "category": "Boutons",
       "price_label": "$10",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_9B67sE4ts0CF3hK71T1VK0j",
       "description": "Bouton d’action lumineux avec variantes de couleur et états accessibles.",
       "deliverables": [
         "HTML",
@@ -24,7 +24,7 @@
       "name": "Soft Button Set",
       "category": "Boutons",
       "price_label": "$12",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_28EfZagcaadf8C40Dv1VK0k",
       "description": "Collection de boutons doux pour interfaces éditoriales, services et portfolios.",
       "deliverables": [
         "HTML",
@@ -41,7 +41,7 @@
       "name": "Aurora Card",
       "category": "Cartes UI",
       "price_label": "$15",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_dRmaEQgcagBD19Cfyp1VK0l",
       "description": "Carte éditoriale avec halo aurora et structure facile à personnaliser.",
       "deliverables": [
         "HTML",
@@ -58,7 +58,7 @@
       "name": "Glass Profile Card",
       "category": "Cartes UI",
       "price_label": "$18",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_3cI7sE3podpr4lO71T1VK0m",
       "description": "Carte de profil en verre dépoli pour créateur, équipe ou portfolio.",
       "deliverables": [
         "HTML",
@@ -75,7 +75,7 @@
       "name": "Product Card Kit",
       "category": "Cartes UI",
       "price_label": "$20",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_aFa14g5xw7133hKdqh1VK0n",
       "description": "Cartes produit pour catalogue digital, boutique ou marketplace.",
       "deliverables": [
         "HTML",
@@ -92,7 +92,7 @@
       "name": "Motion Hero",
       "category": "Heros",
       "price_label": "$22",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_fZu7sE1hgcln8C43PH1VK0o",
       "description": "Hero de landing page avec accroche, CTA et animation légère.",
       "deliverables": [
         "HTML",
@@ -109,7 +109,7 @@
       "name": "Split Hero",
       "category": "Heros",
       "price_label": "$25",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_5kQaEQ4ts4SV7y09a11VK0p",
       "description": "Hero en deux panneaux pour présenter une offre et une preuve visuelle.",
       "deliverables": [
         "HTML",
@@ -126,7 +126,7 @@
       "name": "Pricing Table",
       "category": "Tarification",
       "price_label": "$28",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_7sY5kw5xw99b19Ccmd1VK0q",
       "description": "Bloc de prix lisible avec offre recommandée et appels à l’action.",
       "deliverables": [
         "HTML",
@@ -143,7 +143,7 @@
       "name": "Comparison Table",
       "category": "Tarification",
       "price_label": "$30",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_14A3co7FE99bf0sgCt1VK0r",
       "description": "Tableau de comparaison pour expliquer clairement les différences entre offres.",
       "deliverables": [
         "HTML",
@@ -160,7 +160,7 @@
       "name": "Dashboard Shell",
       "category": "Dashboards",
       "price_label": "$32",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_cNi4gscZY4SV5pS1Hz1VK0s",
       "description": "Structure de dashboard avec navigation latérale, métriques et espace de contenu.",
       "deliverables": [
         "HTML",
@@ -177,7 +177,7 @@
       "name": "Stats Widget",
       "category": "Dashboards",
       "price_label": "$35",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_bJe8wI7FE7137y085X1VK0t",
       "description": "Widget de statistiques compact pour tableau de bord ou page SaaS.",
       "deliverables": [
         "HTML",
@@ -194,7 +194,7 @@
       "name": "Contact Form UI",
       "category": "Formulaires",
       "price_label": "$38",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_4gM6oAaRQetv9G8gCt1VK0u",
       "description": "Formulaire de contact accessible avec champs, aide et état de confirmation.",
       "deliverables": [
         "HTML",
@@ -211,7 +211,7 @@
       "name": "Checkout Form UI",
       "category": "Formulaires",
       "price_label": "$40",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_fZu14gaRQ1GJcSk85X1VK0v",
       "description": "Interface de commande claire à connecter à Stripe Checkout ou Payment Links.",
       "deliverables": [
         "HTML",
@@ -228,7 +228,7 @@
       "name": "Mega Navigation",
       "category": "Navigation",
       "price_label": "$42",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_fZu9AMgcaadf7y02LD1VK0w",
       "description": "Navigation riche pour site de services, catalogue ou plateforme.",
       "deliverables": [
         "HTML",
@@ -245,7 +245,7 @@
       "name": "Mobile Tab Bar",
       "category": "Navigation",
       "price_label": "$45",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_3cI4gse424SVg4w85X1VK0x",
       "description": "Barre d’onglets mobile pour application web ou espace membre.",
       "deliverables": [
         "HTML",
@@ -262,7 +262,7 @@
       "name": "Badge System",
       "category": "Systèmes UI",
       "price_label": "$48",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_9B64gs1hg857g4wbi91VK0y",
       "description": "Système de badges et labels pour statuts, catégories et nouveautés.",
       "deliverables": [
         "HTML",
@@ -279,7 +279,7 @@
       "name": "Testimonial Block",
       "category": "Preuves sociales",
       "price_label": "$50",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_14A8wI2lkbhj05y1Hz1VK0z",
       "description": "Bloc d’avis ou de citation avec hiérarchie éditoriale et attribution.",
       "deliverables": [
         "HTML",
@@ -296,7 +296,7 @@
       "name": "Aurora Background",
       "category": "Arrière-plans",
       "price_label": "$24",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_5kQaEQ2lkadfaKccmd1VK0A",
       "description": "Fond aurora CSS léger pour donner de la profondeur à une section.",
       "deliverables": [
         "CSS",
@@ -313,7 +313,7 @@
       "name": "Footer System",
       "category": "Pieds de page",
       "price_label": "$27",
-      "stripe_payment_link": "",
+      "stripe_payment_link": "https://buy.stripe.com/test_cNi3co3podpr3hK0Dv1VK0B",
       "description": "Pied de page structuré avec navigation, coordonnées et liens légaux.",
       "deliverables": [
         "HTML",
