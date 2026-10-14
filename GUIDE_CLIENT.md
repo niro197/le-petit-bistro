@@ -9,9 +9,9 @@ Les produits de démonstration actuels sont : `UI Gradient Button`, `Aurora Card
 
 ## 12. Panier et commandes
 
-Le fichier `js/store.js` charge le JSON, affiche les cartes, filtre les catégories et gère le panier. Le bouton « Demander ces produits » remplit automatiquement le formulaire de contact avec le contenu de la sélection.
+Le fichier `js/store.js` charge le JSON, affiche les cartes, filtre les catégories et gère le panier. Le bouton « Acheter maintenant » ouvre le checkout du produit sélectionné.
 
-Le mode actuel est volontairement **Sur devis**. Il permet de recueillir une demande sans inventer de prix et sans déclencher un faux paiement.
+Les prix sont affichés en dollars. Le checkout redirige vers le Payment Link Stripe renseigné dans le catalogue.
 
 ## 13. Stripe
 
@@ -19,4 +19,8 @@ Pour vendre avec Stripe, créer un Payment Link ou un produit Stripe réel pour 
 
 Ne jamais placer une clé secrète Stripe dans `index.html`, `js/store.js` ou un autre fichier public. Pour un paiement entièrement automatisé avec création de commande, il faudra un backend ou Stripe Checkout côté serveur. Le site statique peut utiliser des Payment Links publics, mais la confirmation et la livraison doivent être prévues séparément.
 
-Avant la mise en vente, tester : ajout au panier, retrait d’un produit, formulaire, réception de la demande et lien de paiement en mode test. Vérifier également les droits de distribution de chaque composant vendu.
+Avant la mise en vente, tester : ajout au panier, retrait d’un produit, checkout Stripe, redirection vers `success.html` et téléchargement du ZIP. Vérifier également les droits de distribution de chaque composant vendu.
+
+## 14. Page après paiement
+
+`success.html` est la page de confirmation. Elle contient le lien vers `packs/ui-components.zip`. Un téléchargement statique peut être partagé par URL ; pour protéger réellement les fichiers, utiliser un serveur ou un webhook Stripe qui génère un lien signé après paiement.
