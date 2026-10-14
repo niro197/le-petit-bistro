@@ -36,3 +36,9 @@ Chaque carte propose maintenant un bouton **Aperçu**. La modale affiche le comp
 La page [admin.html](admin.html) affiche un formulaire de mot de passe et conserve uniquement un jeton de session temporaire. Le serveur vérifie le mot de passe avec un hash scrypt via `/api/admin/login`. Le mot de passe n’est jamais placé dans le HTML.
 
 Chaque bouton **Acheter** correspond à un modèle et à un Payment Link Stripe distinct. Le panier actuel paie un seul modèle à la fois ; un panier groupé nécessiterait une Checkout Session Stripe créée côté serveur.
+
+## Refonte des composants UI
+
+La première version du ZIP utilisait volontairement un squelette de démonstration commun : c’est pourquoi les fichiers CSS se ressemblaient trop par rapport à leurs descriptions. Les 19 composants ont été reconstruits avec des structures, mises en page, couleurs et comportements visuels propres à leur rôle. Chaque dossier contient maintenant un `component.html`, un `component.css` indenté et un README adapté.
+
+La boutique affiche aussi 19 aperçus distincts dans les cartes et la modale.

@@ -1,1 +1,30 @@
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f5f3ee;color:#15131d;font-family:Arial,sans-serif}.component{width:min(560px,calc(100% - 40px));padding:48px;border-radius:18px;background:#fffefa;box-shadow:0 20px 60px #15131d1c}.eyebrow{color:#ec6a52;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.component h1{font-size:clamp(2rem,6vw,4rem);line-height:.95}.component p{color:#655f70;line-height:1.6}.component button{padding:13px 18px;border:0;border-radius:5px;background:#ec6a52;color:#fffefa;font-weight:700;cursor:pointer}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  color: #15131d;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+body { background: #d7ccf8; }
+.mobile-frame { width: 300px; padding: 12px; border-radius: 34px; background: #15131d; box-shadow: 0 25px 70px #15131d55; }
+.mobile-screen { min-height: 500px; padding: 32px 20px; border-radius: 25px 25px 8px 8px; background: #fffefa; }
+.mobile-screen h1 { margin-top: 35px; font-size: 2rem; letter-spacing: -.08em; }
+.mobile-screen > p { color: #655f70; }
+.mobile-card { display: grid; gap: 10px; margin-top: 120px; padding: 18px; background: #b8dbc9; }
+.mobile-card strong { font-size: 2.2rem; }
+.mobile-frame nav { display: flex; justify-content: space-around; padding: 16px 5px 8px; color: #fffefa; }
+.mobile-frame nav a { display: grid; gap: 3px; place-items: center; font-size: 1.2rem; }
+.mobile-frame nav small { font-size: .58rem; }
+.mobile-frame nav .active { color: #f4c84e; }

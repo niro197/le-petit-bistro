@@ -13,10 +13,30 @@ let activeCategory = 'all';
 let searchTerm = '';
 
 const previewMarkup = {
-  'gradient-button': '<div class="shop-preview preview-gradient"><span>Hover me</span><i></i><i></i></div>',
-  'aurora-card': '<div class="shop-preview preview-aurora"><div><small>COMPONENT 02</small><strong>Aurora<br>Card</strong></div><i></i></div>',
-  'motion-hero': '<div class="shop-preview preview-motion"><small>NEW COLLECTION</small><strong>Make it<br>move.</strong><span>Discover</span><i></i></div>'
+  'ui-gradient-button': '<div class="shop-preview preview-gradient"><span>Commencer</span><i></i><i></i></div>',
+  'soft-button-set': '<div class="shop-preview preview-soft"><strong>Choose a calm action.</strong><span>Continue</span><span>Save for later</span></div>',
+  'aurora-card': '<div class="shop-preview preview-aurora"><small>AURORA / EDITORIAL</small><strong>Ideas<br>with light.</strong><i></i></div>',
+  'glass-profile-card': '<div class="shop-preview preview-profile"><b>SP</b><strong>Studio Projet</strong><small>Designer / developer</small><span>Follow</span></div>',
+  'product-card-kit': '<div class="shop-preview preview-product"><small>OBJECT / 014</small><strong>Product Card Kit</strong><span>$20</span></div>',
+  'motion-hero': '<div class="shop-preview preview-motion"><small>BUILT TO MOVE</small><strong>Make it<br>move.</strong><span>Explore ↗</span><i></i></div>',
+  'split-hero': '<div class="shop-preview preview-split"><strong>One offer.<br><em>Two views.</em></strong><i>VISUAL<br>PROOF</i></div>',
+  'pricing-table': '<div class="shop-preview preview-pricing"><small>RECOMMENDED</small><strong>$48</strong><span>Choose plan</span></div>',
+  'comparison-table': '<div class="shop-preview preview-comparison"><strong>Compare<br>the signal.</strong><span>✓ &nbsp; ✓ &nbsp; —</span></div>',
+  'dashboard-shell': '<div class="shop-preview preview-dashboard"><aside>SP<br><small>Overview</small><small>Activity</small></aside><div><small>MONDAY, OCTOBER 14</small><strong>Good<br>morning.</strong><i></i></div></div>',
+  'stats-widget': '<div class="shop-preview preview-stats"><small>THIS MONTH</small><strong>+28.4%</strong><span>↑</span><i></i><i></i><i></i></div>',
+  'form-contact': '<div class="shop-preview preview-form"><small>LET\'S TALK</small><strong>Tell us<br>about it.</strong><i></i><i></i><i></i><i></i></div>',
+  'checkout-form': '<div class="shop-preview preview-checkout"><small>SECURE CHECKOUT</small><strong>Complete<br>your order.</strong><span>$40</span></div>',
+  'nav-mega-menu': '<div class="shop-preview preview-nav"><strong>FIELD NOTES</strong><span>Work &nbsp; Services &nbsp; About</span><i>Ideas made useful.</i></div>',
+  'mobile-tab-bar': '<div class="shop-preview preview-mobile"><strong>Good evening.</strong><span>Weekly progress&nbsp; 72%</span><i>⌂ &nbsp; ◌ &nbsp; ✦</i></div>',
+  'badge-system': '<div class="shop-preview preview-badge"><small>STATUS SYSTEM</small><strong>Status,<br>made clear.</strong><span>● Live &nbsp; New &nbsp; Beta</span></div>',
+  'testimonial-block': '<div class="shop-preview preview-quote"><b>“</b><strong>The clearest<br>work we shipped.</strong><small>— Marie R.</small></div>',
+  'aurora-background': '<div class="shop-preview preview-background"><small>CSS BACKGROUND</small><strong>Depth<br>without noise.</strong></div>',
+  'footer-system': '<div class="shop-preview preview-footer"><strong>Studio Projet</strong><span>Explore &nbsp; Legal &nbsp; Contact</span><small>© 2026</small></div>'
 };
+
+function getPreview(product) {
+  return previewMarkup[product.id] || '';
+}
 
 function renderFilters() {
   const categories = ['Toutes les catégories', ...new Set(products.map((product) => product.category))];
@@ -39,7 +59,7 @@ function renderProducts() {
   if (resultLabel) resultLabel.textContent = `${visible.length} produit${visible.length > 1 ? 's' : ''} affiché${visible.length > 1 ? 's' : ''} sur ${products.length}`;
   productGrid.innerHTML = visible.length ? visible.map((product) => {
     const canBuy = Boolean(product.stripe_payment_link);
-    return `<article class="shop-product" data-product-id="${product.id}">${previewMarkup[product.preview] || ''}<div class="shop-product-body"><span class="product-category">${product.category}</span><h3>${product.name}</h3><p>${product.description}</p><div class="product-meta"><strong>${product.price_label}</strong><div class="product-actions"><button type="button" class="preview-product" data-preview-product="${product.id}">Aperçu</button><a class="buy-product${canBuy ? '' : ' is-pending'}" ${canBuy ? `href="checkout.html?product=${encodeURIComponent(product.id)}"` : 'aria-disabled="true"'}>${canBuy ? 'Acheter' : 'Stripe à configurer'}</a><button type="button" class="add-to-cart" data-add-product="${product.id}">Ajouter</button></div></div><details><summary>Ce qui est inclus <span>+</span></summary><ul>${product.deliverables.map((item) => `<li>${item}</li>`).join('')}</ul></details></div></article>`;
+    return `<article class="shop-product" data-product-id="${product.id}">${getPreview(product)}<div class="shop-product-body"><span class="product-category">${product.category}</span><h3>${product.name}</h3><p>${product.description}</p><div class="product-meta"><strong>${product.price_label}</strong><div class="product-actions"><button type="button" class="preview-product" data-preview-product="${product.id}">Aperçu</button><a class="buy-product${canBuy ? '' : ' is-pending'}" ${canBuy ? `href="checkout.html?product=${encodeURIComponent(product.id)}"` : 'aria-disabled="true"'}>${canBuy ? 'Acheter' : 'Stripe à configurer'}</a><button type="button" class="add-to-cart" data-add-product="${product.id}">Ajouter</button></div></div><details><summary>Ce qui est inclus <span>+</span></summary><ul>${product.deliverables.map((item) => `<li>${item}</li>`).join('')}</ul></details></div></article>`;
   }).join('') : '<p class="catalog-error">Aucun produit ne correspond à cette recherche.</p>';
   productGrid.querySelectorAll('[data-add-product]').forEach((button) => button.addEventListener('click', () => addToCart(button.dataset.addProduct)));
   productGrid.querySelectorAll('[data-preview-product]').forEach((button) => button.addEventListener('click', () => openPreview(button.dataset.previewProduct)));
@@ -49,7 +69,7 @@ function openPreview(id) {
   const product = products.find((item) => item.id === id);
   const modal = document.querySelector('#component-preview');
   if (!product || !modal) return;
-  modal.querySelector('[data-preview-stage]').innerHTML = previewMarkup[product.preview] || '';
+  modal.querySelector('[data-preview-stage]').innerHTML = getPreview(product);
   modal.querySelector('[data-preview-category]').textContent = product.category;
   modal.querySelector('[data-preview-title]').textContent = product.name;
   modal.querySelector('[data-preview-description]').textContent = product.description;

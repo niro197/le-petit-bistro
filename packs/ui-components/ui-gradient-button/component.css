@@ -1,1 +1,28 @@
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f5f3ee;color:#15131d;font-family:Arial,sans-serif}.component{width:min(560px,calc(100% - 40px));padding:48px;border-radius:18px;background:#fffefa;box-shadow:0 20px 60px #15131d1c}.eyebrow{color:#ec6a52;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.component h1{font-size:clamp(2rem,6vw,4rem);line-height:.95}.component p{color:#655f70;line-height:1.6}.component button{padding:13px 18px;border:0;border-radius:5px;background:#ec6a52;color:#fffefa;font-weight:700;cursor:pointer}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  color: #15131d;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+body { background: #15131d; color: #fffefa; }
+.button-lab { width: min(620px, 100%); }
+.kicker { color: #f4c84e; letter-spacing: .12em; text-transform: uppercase; font-size: .7rem; font-weight: 700; }
+h1 { font-size: clamp(3rem, 9vw, 6rem); line-height: .9; letter-spacing: -.08em; }
+.button-lab > p:not(.kicker) { max-width: 360px; color: #c7c2ce; }
+.button-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+.gradient-button, .ghost-button { padding: 14px 20px; border-radius: 999px; font-weight: 700; }
+.gradient-button { background: linear-gradient(110deg, #ec6a52, #f4c84e); color: #15131d; box-shadow: 0 12px 30px #ec6a5255; }
+.ghost-button { background: transparent; color: #fffefa; border: 1px solid #fffefa66; }

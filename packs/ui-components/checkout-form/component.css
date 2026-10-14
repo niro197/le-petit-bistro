@@ -1,1 +1,30 @@
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f5f3ee;color:#15131d;font-family:Arial,sans-serif}.component{width:min(560px,calc(100% - 40px));padding:48px;border-radius:18px;background:#fffefa;box-shadow:0 20px 60px #15131d1c}.eyebrow{color:#ec6a52;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.component h1{font-size:clamp(2rem,6vw,4rem);line-height:.95}.component p{color:#655f70;line-height:1.6}.component button{padding:13px 18px;border:0;border-radius:5px;background:#ec6a52;color:#fffefa;font-weight:700;cursor:pointer}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  color: #15131d;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+body { background: #f5f3ee; }
+.checkout { display: grid; grid-template-columns: 1.2fr .8fr; width: min(760px, 100%); background: #fffefa; }
+.checkout-main { display: grid; gap: 14px; padding: 38px; }
+.checkout-main .kicker { color: #ec6a52; font-size: .7rem; font-weight: 800; letter-spacing: .12em; }
+.checkout h1 { margin: 0 0 14px; font-size: 3rem; letter-spacing: -.08em; }
+.checkout label { display: grid; gap: 6px; font-size: .75rem; font-weight: 800; }
+.checkout input { padding: 12px; border: 1px solid #d8d3ca; background: #f5f3ee; }
+.checkout button { margin-top: 10px; padding: 14px; background: #15131d; color: #fffefa; font-weight: 800; }
+.checkout aside { display: grid; align-content: center; gap: 12px; padding: 30px; background: #d7ccf8; }
+.checkout aside strong { font-size: 3.5rem; }
+.checkout aside small { color: #655f70; }
