@@ -15,6 +15,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_missing');
 const app = express();
 const port = Number(process.env.PORT || 8787);
 const ttlSeconds = Number(process.env.DOWNLOAD_TTL_SECONDS || 86400);
+const adminToken = process.env.ADMIN_TOKEN || '';
 const zipPath = path.resolve(serverRoot, process.env.DOWNLOAD_ZIP_PATH || '../packs/ui-components.zip');
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(',').map((origin) => origin.trim()).filter(Boolean);
 const allowedProducts = new Set([
@@ -39,11 +40,16 @@ db.exec(`CREATE TABLE IF NOT EXISTS orders (
   payment_status TEXT NOT NULL,
   created_at INTEGER NOT NULL,
   expires_at INTEGER NOT NULL,
-  downloaded_at INTEGER
+  downloaded_at INTEGER,
+  amount_total INTEGER DEFAULT 0,
+  currency TEXT DEFAULT 'usd'
 )`);
-const saveOrder = db.prepare(`INSERT INTO orders (session_id, payment_link_id, product_id, customer_email, payment_status, created_at, expires_at)
-  VALUES (@session_id, @payment_link_id, @product_id, @customer_email, @payment_status, @created_at, @expires_at)
-  ON CONFLICT(session_id) DO UPDATE SET payment_status=excluded.payment_status, customer_email=excluded.customer_email, expires_at=excluded.expires_at`);
+const columns = db.prepare('PRAGMA table_info(orders)').all().map((column) => column.name);
+if (!columns.includes('amount_total')) db.exec("ALTER TABLE orders ADD COLUMN amount_total INTEGER DEFAULT 0");
+if (!columns.includes('currency')) db.exec("ALTER TABLE orders ADD COLUMN currency TEXT DEFAULT 'usd'");
+const saveOrder = db.prepare(`INSERT INTO orders (session_id, payment_link_id, product_id, customer_email, payment_status, created_at, expires_at, amount_total, currency)
+  VALUES (@session_id, @payment_link_id, @product_id, @customer_email, @payment_status, @created_at, @expires_at, @amount_total, @currency)
+  ON CONFLICT(session_id) DO UPDATE SET payment_status=excluded.payment_status, customer_email=excluded.customer_email, expires_at=excluded.expires_at, amount_total=excluded.amount_total, currency=excluded.currency`);
 const findOrder = db.prepare('SELECT * FROM orders WHERE session_id = ?');
 const markDownloaded = db.prepare('UPDATE orders SET downloaded_at = ? WHERE session_id = ?');
 
@@ -80,7 +86,9 @@ app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async
         customer_email: session.customer_details?.email || null,
         payment_status: session.payment_status,
         created_at: now,
-        expires_at: now + ttlSeconds
+        expires_at: now + ttlSeconds,
+        amount_total: session.amount_total || 0,
+        currency: session.currency || 'usd'
       });
     }
     return res.json({ received: true });
@@ -92,6 +100,27 @@ app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async
 
 app.use(express.json({ limit: '50kb' }));
 app.get('/health', (_req, res) => res.json({ ok: true, service: 'studio-projets-download-api' }));
+
+function requireAdmin(req, res, next) {
+  if (!adminToken) return res.status(503).json({ error: 'ADMIN_TOKEN non configuré sur le serveur.' });
+  const authorization = String(req.headers.authorization || '');
+  if (authorization !== `Bearer ${adminToken}`) return res.status(401).json({ error: 'Jeton administrateur invalide.' });
+  return next();
+}
+
+const adminLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 60, standardHeaders: 'draft-8', legacyHeaders: false });
+app.get('/api/admin/stats', adminLimiter, requireAdmin, (_req, res) => {
+  const paid = db.prepare("SELECT COUNT(*) AS count, COALESCE(SUM(amount_total), 0) AS revenue FROM orders WHERE payment_status = 'paid'").get();
+  const downloads = db.prepare('SELECT COUNT(*) AS count FROM orders WHERE downloaded_at IS NOT NULL').get();
+  const productRows = db.prepare("SELECT product_id, COUNT(*) AS sales, COALESCE(SUM(amount_total), 0) AS revenue, SUM(CASE WHEN downloaded_at IS NOT NULL THEN 1 ELSE 0 END) AS downloads FROM orders WHERE payment_status = 'paid' GROUP BY product_id ORDER BY sales DESC, revenue DESC").all();
+  const recentRows = db.prepare('SELECT session_id, product_id, customer_email, payment_status, amount_total, currency, created_at, downloaded_at FROM orders ORDER BY created_at DESC LIMIT 50').all();
+  return res.json({
+    generated_at: new Date().toISOString(),
+    summary: { sales: paid.count, revenue_cents: paid.revenue, downloads: downloads.count },
+    by_product: productRows,
+    recent: recentRows
+  });
+});
 
 const downloadLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 20, standardHeaders: 'draft-8', legacyHeaders: false });
 app.get('/api/download', downloadLimiter, async (req, res) => {
@@ -108,7 +137,7 @@ app.get('/api/download', downloadLimiter, async (req, res) => {
       const productId = paymentLink.metadata?.catalogue_id;
       if (!allowedProducts.has(productId)) return res.status(403).json({ error: 'Produit non autorisé.' });
       const now = Math.floor(Date.now() / 1000);
-      saveOrder.run({ session_id: session.id, payment_link_id: session.payment_link, product_id: productId, customer_email: session.customer_details?.email || null, payment_status: session.payment_status, created_at: now, expires_at: now + ttlSeconds });
+      saveOrder.run({ session_id: session.id, payment_link_id: session.payment_link, product_id: productId, customer_email: session.customer_details?.email || null, payment_status: session.payment_status, created_at: now, expires_at: now + ttlSeconds, amount_total: session.amount_total || 0, currency: session.currency || 'usd' });
       order = findOrder.get(sessionId);
     }
     if (order.payment_status !== 'paid') return res.status(402).json({ error: 'Paiement non confirmé.' });

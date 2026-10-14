@@ -26,3 +26,7 @@ Avant mise en production : déployer `server/` sur un hébergement Node HTTPS av
 ## Aperçus interactifs
 
 Chaque carte propose maintenant un bouton **Aperçu**. La modale affiche le composant, sa catégorie, sa description, son prix et son bouton d’achat. Le bouton `Échap` et le clic sur le fond ferment la modale.
+
+## Administration
+
+[Ouvrir la page d’administration](admin.html) — HTML, CSS et JavaScript réunis dans un seul fichier lisible. Elle affiche les ventes, le chiffre d’affaires, les téléchargements et les commandes récentes via `/api/admin/stats`. L’accès exige le `ADMIN_TOKEN` configuré côté serveur.
