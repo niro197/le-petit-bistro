@@ -3,10 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interface de commande claire à connecter à Stripe Checkout ou Payment Links.">
+  <meta name="category" content="Formulaires">
   <title>Checkout Form UI</title>
   <link rel="stylesheet" href="component.css">
 </head>
 <body>
-  <main class="checkout"><div class="checkout-main"><p class="kicker">SECURE CHECKOUT</p><h1>Complete your order.</h1><label>Email<input placeholder="you@example.com"></label><label>Card number<input placeholder="4242 4242 4242 4242"></label><button>Pay $40</button></div><aside><span>Checkout Form UI</span><strong>$40</strong><small>One digital component</small></aside></main>
+  <main data-component="checkout-form" class="checkout">
+    <div class="checkout-main">
+    <p class="kicker">SECURE CHECKOUT</p>
+    <h1>Complete your order.</h1>
+    <label>Email<input placeholder="you@example.com">
+    </label>
+    <label>Card number<input placeholder="4242 4242 4242 4242">
+    </label>
+    <button>Pay $40</button>
+    </div>
+    <aside>
+    <span>Checkout Form UI</span>
+    <strong>$40</strong>
+    <small>One digital component</small>
+    </aside>
+    </main>
 </body>
 </html>

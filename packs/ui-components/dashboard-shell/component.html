@@ -3,10 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Structure de dashboard avec navigation latérale, métriques et espace de contenu.">
+  <meta name="category" content="Dashboards">
   <title>Dashboard Shell</title>
   <link rel="stylesheet" href="component.css">
 </head>
 <body>
-  <main class="dashboard"><aside><strong>SP</strong><a>Overview</a><a>Activity</a><a>Settings</a></aside><section><p>MONDAY, OCTOBER 14</p><h1>Good morning.</h1><div class="stats"><article><small>Revenue</small><b>$12,840</b></article><article><small>Projects</small><b>24</b></article></div><div class="chart"></div></section></main>
+  <main class="dashboard">
+    <aside>
+    <strong>SP</strong>
+    <a>Overview</a>
+    <a>Activity</a>
+    <a>Settings</a>
+    </aside>
+    <section data-component="dashboard-shell">
+    <p>MONDAY, OCTOBER 14</p>
+    <h1>Good morning.</h1>
+    <div class="stats">
+    <article>
+    <small>Revenue</small>
+    <b>$12,840</b>
+    </article>
+    <article>
+    <small>Projects</small>
+    <b>24</b>
+    </article>
+    </div>
+    <div class="chart">
+    </div>
+    </section>
+    </main>
 </body>
 </html>

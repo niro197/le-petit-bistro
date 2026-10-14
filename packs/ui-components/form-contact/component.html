@@ -3,10 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Formulaire de contact accessible avec champs, aide et état de confirmation.">
+  <meta name="category" content="Formulaires">
   <title>Contact Form UI</title>
   <link rel="stylesheet" href="component.css">
 </head>
 <body>
-  <form class="contact-form"><p class="kicker">LET'S TALK</p><h1>Tell us about it.</h1><label>Name<input placeholder="Your name"></label><label>Email<input placeholder="you@example.com"></label><label>Message<textarea rows=4 placeholder="What are you building?"></textarea></label><button>Send message</button></form>
+  <form data-component="form-contact" class="contact-form">
+    <p class="kicker">LET'S TALK</p>
+    <h1>Tell us about it.</h1>
+    <label>Name<input placeholder="Your name">
+    </label>
+    <label>Email<input placeholder="you@example.com">
+    </label>
+    <label>Message<textarea rows=4 placeholder="What are you building?">
+    </textarea>
+    </label>
+    <button>Send message</button>
+    </form>
 </body>
 </html>
