@@ -7,6 +7,7 @@ import Stripe from 'stripe';
 import Database from 'better-sqlite3';
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -15,7 +16,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_missing');
 const app = express();
 const port = Number(process.env.PORT || 8787);
 const ttlSeconds = Number(process.env.DOWNLOAD_TTL_SECONDS || 86400);
-const adminToken = process.env.ADMIN_TOKEN || '';
+const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH || '';
+const adminSessionSecret = process.env.ADMIN_SESSION_SECRET || '';
+const adminSessionTtlSeconds = 8 * 60 * 60;
+const adminSessions = new Map();
 const zipPath = path.resolve(serverRoot, process.env.DOWNLOAD_ZIP_PATH || '../packs/ui-components.zip');
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(',').map((origin) => origin.trim()).filter(Boolean);
 const allowedProducts = new Set([
@@ -102,13 +106,43 @@ app.use(express.json({ limit: '50kb' }));
 app.get('/health', (_req, res) => res.json({ ok: true, service: 'studio-projets-download-api' }));
 
 function requireAdmin(req, res, next) {
-  if (!adminToken) return res.status(503).json({ error: 'ADMIN_TOKEN non configuré sur le serveur.' });
+  if (!adminPasswordHash || !adminSessionSecret) return res.status(503).json({ error: 'Authentification admin non configurée sur le serveur.' });
   const authorization = String(req.headers.authorization || '');
-  if (authorization !== `Bearer ${adminToken}`) return res.status(401).json({ error: 'Jeton administrateur invalide.' });
+  const sessionToken = authorization.startsWith('Bearer ') ? authorization.slice(7) : '';
+  const session = adminSessions.get(sessionToken);
+  if (!session || session.expiresAt < Date.now()) {
+    adminSessions.delete(sessionToken);
+    return res.status(401).json({ error: 'Session administrateur expirée ou invalide.' });
+  }
   return next();
 }
 
+function passwordMatches(password, storedHash) {
+  const [algorithm, saltHex, keyHex] = storedHash.split('$');
+  if (algorithm !== 'scrypt' || !saltHex || !keyHex) return false;
+  const salt = Buffer.from(saltHex, 'hex');
+  const expected = Buffer.from(keyHex, 'hex');
+  const actual = crypto.scryptSync(password, salt, expected.length, { N: 16384, r: 8, p: 1 });
+  return actual.length === expected.length && crypto.timingSafeEqual(actual, expected);
+}
+
+function createAdminSession() {
+  const randomPart = crypto.randomBytes(32).toString('hex');
+  const signature = crypto.createHmac('sha256', adminSessionSecret).update(randomPart).digest('hex');
+  const token = `${randomPart}.${signature}`;
+  adminSessions.set(token, { expiresAt: Date.now() + adminSessionTtlSeconds * 1000 });
+  return token;
+}
+
 const adminLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 60, standardHeaders: 'draft-8', legacyHeaders: false });
+const adminLoginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 8, standardHeaders: 'draft-8', legacyHeaders: false });
+app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
+  if (!adminPasswordHash || !adminSessionSecret) return res.status(503).json({ error: 'Authentification admin non configurée.' });
+  const password = typeof req.body?.password === 'string' ? req.body.password : '';
+  if (!password || password.length > 200 || !passwordMatches(password, adminPasswordHash)) return res.status(401).json({ error: 'Mot de passe incorrect.' });
+  return res.json({ token: createAdminSession(), expires_in: adminSessionTtlSeconds });
+});
+
 app.get('/api/admin/stats', adminLimiter, requireAdmin, (_req, res) => {
   const paid = db.prepare("SELECT COUNT(*) AS count, COALESCE(SUM(amount_total), 0) AS revenue FROM orders WHERE payment_status = 'paid'").get();
   const downloads = db.prepare('SELECT COUNT(*) AS count FROM orders WHERE downloaded_at IS NOT NULL').get();

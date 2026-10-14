@@ -30,3 +30,9 @@ Chaque carte propose maintenant un bouton **Aperçu**. La modale affiche le comp
 ## Administration
 
 [Ouvrir la page d’administration](admin.html) — HTML, CSS et JavaScript réunis dans un seul fichier lisible. Elle affiche les ventes, le chiffre d’affaires, les téléchargements et les commandes récentes via `/api/admin/stats`. L’accès exige le `ADMIN_TOKEN` configuré côté serveur.
+
+## Authentification de l’administration
+
+La page [admin.html](admin.html) affiche un formulaire de mot de passe et conserve uniquement un jeton de session temporaire. Le serveur vérifie le mot de passe avec un hash scrypt via `/api/admin/login`. Le mot de passe n’est jamais placé dans le HTML.
+
+Chaque bouton **Acheter** correspond à un modèle et à un Payment Link Stripe distinct. Le panier actuel paie un seul modèle à la fois ; un panier groupé nécessiterait une Checkout Session Stripe créée côté serveur.

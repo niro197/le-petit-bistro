@@ -230,10 +230,10 @@
         <input id="api-url" type="url" placeholder="https://api.exemple.com">
       </div>
       <div class="field">
-        <label for="admin-token">Jeton administrateur</label>
-        <input id="admin-token" type="password" autocomplete="current-password" placeholder="ADMIN_TOKEN">
+        <label for="admin-password">Mot de passe administrateur</label>
+        <input id="admin-password" type="password" autocomplete="current-password" placeholder="Mot de passe">
       </div>
-      <button class="button" id="load-dashboard" type="button">Charger les données</button>
+      <button class="button" id="load-dashboard" type="button">Se connecter et charger</button>
       <p class="status" id="login-status" role="status" aria-live="polite"></p>
     </section>
 
@@ -286,21 +286,20 @@
       </div>
     </section>
 
-    <p class="admin-footer">Le jeton reste uniquement dans la session du navigateur. Ne partage jamais cette page avec le jeton prérempli.</p>
+    <p class="admin-footer">Le mot de passe ne quitte le navigateur que lors de la connexion HTTPS. Seul un jeton de session temporaire reste en mémoire.</p>
   </main>
 
   <script>
     const apiUrlInput = document.querySelector('#api-url');
-    const tokenInput = document.querySelector('#admin-token');
+    const passwordInput = document.querySelector('#admin-password');
     const loadButton = document.querySelector('#load-dashboard');
     const refreshButton = document.querySelector('#refresh-dashboard');
     const status = document.querySelector('#login-status');
     const dashboard = document.querySelector('#dashboard');
 
     const savedApiUrl = sessionStorage.getItem('studio_admin_api_url');
-    const savedToken = sessionStorage.getItem('studio_admin_token');
+    let sessionToken = sessionStorage.getItem('studio_admin_session');
     if (savedApiUrl) apiUrlInput.value = savedApiUrl;
-    if (savedToken) tokenInput.value = savedToken;
 
     function money(cents, currency = 'usd') {
       return new Intl.NumberFormat('fr-FR', {
@@ -323,21 +322,38 @@
 
     async function loadData() {
       const apiUrl = apiUrlInput.value.trim().replace(/\/$/, '');
-      const token = tokenInput.value.trim();
-      if (!apiUrl || !token) {
-        status.textContent = 'Renseigne l’URL HTTPS de l’API et le jeton.';
+      const password = passwordInput.value;
+      if (!apiUrl || !password) {
+        status.textContent = 'Renseigne l’URL HTTPS de l’API et le mot de passe.';
         return;
       }
 
       status.textContent = 'Chargement…';
       sessionStorage.setItem('studio_admin_api_url', apiUrl);
-      sessionStorage.setItem('studio_admin_token', token);
+
 
       try {
+        if (!sessionToken) {
+          const loginResponse = await fetch(`${apiUrl}/api/admin/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password })
+          });
+          const loginData = await loginResponse.json();
+          if (!loginResponse.ok) throw new Error(loginData.error || 'Mot de passe incorrect.');
+          sessionToken = loginData.token;
+          sessionStorage.setItem('studio_admin_session', sessionToken);
+          passwordInput.value = '';
+        }
+
         const response = await fetch(`${apiUrl}/api/admin/stats`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${sessionToken}` }
         });
         const data = await response.json();
+        if (response.status === 401) {
+          sessionToken = '';
+          sessionStorage.removeItem('studio_admin_session');
+        }
         if (!response.ok) throw new Error(data.error || 'Accès refusé.');
         renderDashboard(data);
         dashboard.hidden = false;
@@ -365,7 +381,7 @@
 
     loadButton.addEventListener('click', loadData);
     refreshButton.addEventListener('click', loadData);
-    tokenInput.addEventListener('keydown', (event) => {
+    passwordInput.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') loadData();
     });
   </script>
