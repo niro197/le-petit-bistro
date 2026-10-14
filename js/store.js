@@ -1,10 +1,14 @@
 const productGrid = document.querySelector('#product-grid');
 const filterBar = document.querySelector('#product-filters');
+const searchInput = document.querySelector('#product-search');
+const resultLabel = document.querySelector('#catalog-result');
 const cartItems = document.querySelector('#cart-items');
 const cartCount = document.querySelector('#cart-count');
 const cartCta = document.querySelector('#cart-cta');
 const cart = [];
 let products = [];
+let activeCategory = 'all';
+let searchTerm = '';
 
 const previewMarkup = {
   'gradient-button': '<div class="shop-preview preview-gradient"><span>Hover me</span><i></i><i></i></div>',
@@ -16,17 +20,29 @@ function renderFilters() {
   const categories = ['Toutes les catégories', ...new Set(products.map((product) => product.category))];
   filterBar.innerHTML = categories.map((category, index) => `<button class="filter-button${index === 0 ? ' is-active' : ''}" type="button" data-category="${index === 0 ? 'all' : category}">${category}</button>`).join('');
   filterBar.querySelectorAll('.filter-button').forEach((button) => button.addEventListener('click', () => {
+    activeCategory = button.dataset.category;
     filterBar.querySelectorAll('.filter-button').forEach((item) => item.classList.remove('is-active'));
     button.classList.add('is-active');
-    renderProducts(button.dataset.category);
+    renderProducts();
   }));
 }
 
-function renderProducts(category = 'all') {
-  const visible = category === 'all' ? products : products.filter((product) => product.category === category);
-  productGrid.innerHTML = visible.map((product) => `<article class="shop-product" data-product-id="${product.id}">${previewMarkup[product.preview] || ''}<div class="shop-product-body"><span class="product-category">${product.category}</span><h3>${product.name}</h3><p>${product.description}</p><div class="product-meta"><strong>${product.price_label}</strong><button type="button" class="add-to-cart" data-add-product="${product.id}">Ajouter à la sélection</button></div><details><summary>Ce qui est inclus <span>+</span></summary><ul>${product.deliverables.map((item) => `<li>${item}</li>`).join('')}</ul></details></div></article>`).join('');
+function renderProducts() {
+  const normalizedSearch = searchTerm.trim().toLocaleLowerCase('fr');
+  const visible = products.filter((product) => {
+    const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
+    const searchable = `${product.name} ${product.category} ${product.description} ${product.deliverables.join(' ')}`.toLocaleLowerCase('fr');
+    return matchesCategory && (!normalizedSearch || searchable.includes(normalizedSearch));
+  });
+  if (resultLabel) resultLabel.textContent = `${visible.length} produit${visible.length > 1 ? 's' : ''} affiché${visible.length > 1 ? 's' : ''} sur ${products.length}`;
+  productGrid.innerHTML = visible.length ? visible.map((product) => `<article class="shop-product" data-product-id="${product.id}">${previewMarkup[product.preview] || ''}<div class="shop-product-body"><span class="product-category">${product.category}</span><h3>${product.name}</h3><p>${product.description}</p><div class="product-meta"><strong>${product.price_label}</strong><button type="button" class="add-to-cart" data-add-product="${product.id}">Ajouter à la sélection</button></div><details><summary>Ce qui est inclus <span>+</span></summary><ul>${product.deliverables.map((item) => `<li>${item}</li>`).join('')}</ul></details></div></article>`).join('') : '<p class="catalog-error">Aucun produit ne correspond à cette recherche.</p>';
   productGrid.querySelectorAll('[data-add-product]').forEach((button) => button.addEventListener('click', () => addToCart(button.dataset.addProduct)));
 }
+
+searchInput?.addEventListener('input', () => {
+  searchTerm = searchInput.value;
+  renderProducts();
+});
 
 function addToCart(id) {
   const product = products.find((item) => item.id === id);
