@@ -1,32 +1,40 @@
-# Le Petit Bistro
+# Studio Projet
 
-Site vitrine statique responsive pour un restaurant fictif.
+Portfolio commercial statique pour présenter et vendre des projets digitaux : sites vitrine, landing pages, identités et boutiques.
 
 ## Direction artistique
-Palette : encre `#17202A`, papier `#F5F1E8`, safran `#EDB441`, piment `#D75B42`, sauge `#B9CDB8`. Fraunces porte la voix éditoriale ; DM Sans assure la lisibilité. La scène de table en CSS est l’élément mémorable, sans image distante cassée.
 
-## À remplacer
-Rechercher `[À REMPLACER` et `XX €` : adresse, ville, téléphone, e-mail, horaires, tarifs, équipe, réseaux sociaux, domaine, SIRET, hébergeur, accessibilité et conditions d’annulation.
+- Palette : encre `#15131D`, papier `#F5F3EE`, corail `#EC6A52`, jaune `#F4C84E`, lilas `#D7CCF8`, menthe `#B8DBC9`.
+- Typographie : Space Grotesk pour les titres, DM Sans pour le texte.
+- Une composition d’écrans abstraits ouvre la page ; les projets sont présentés comme un catalogue avec filtres et fiches interactives.
+
+## Fonctionnalités
+
+- Filtres par type de projet.
+- Modale interactive pour les détails de chaque projet.
+- Formulaire « Demander une proposition ».
+- Navigation responsive et menu mobile.
+- SEO de base, Open Graph, JSON-LD, favicon, sitemap et robots.txt.
+- Pages modèles pour mentions légales et confidentialité.
+
+## Personnalisation rapide
+
+Rechercher dans le projet :
+
+```text
+[À REMPLACER
+```
+
+Puis remplacer le nom du studio, e-mail, téléphone, ville, réseaux sociaux, projets, contenus, délais, domaine et informations juridiques.
+
+Les projets de démonstration sont clairement identifiés dans `index.html`. Remplacez-les par vos vrais projets avant de vendre le site.
 
 ## Formulaire
-Le formulaire est préparé pour Formspree. Créer un formulaire sur https://formspree.io/, remplacer `[À REMPLACER : identifiant]` dans `index.html`, puis adapter le message de démonstration dans `js/main.js`. Un site statique n’envoie pas d’e-mail seul.
 
-## Images à préparer
-Le hero fonctionne sans image grâce à l’illustration CSS. Pour ajouter des photos, utiliser des fichiers locaux WebP dans `images/`, avec `width`, `height`, `loading="lazy"` et un `alt` descriptif. Sources possibles : Unsplash, Pexels ou Pixabay ; vérifier les licences et crédits. Canva, Figma, Coolors et Google Fonts peuvent aider pour les supports de marque.
+Le formulaire est prêt pour Formspree. Remplacer `[À REMPLACER : identifiant-contact]` dans `index.html`, puis tester la réception. Un site statique n’envoie pas d’e-mail seul.
 
 ## Mise en ligne
-Publier sur GitHub Pages ou Netlify, configurer le domaine dans `canonical`, Open Graph, `robots.txt` et `sitemap.xml`, puis tester le formulaire. Vérifier les conditions du plan gratuit du service choisi.
 
-Les pages juridiques sont à ajouter et à valider avant publication ; un modèle ne remplace pas un avis juridique.
+Le dépôt peut être publié sur GitHub Pages, Netlify ou Cloudflare Pages. Remplacer le domaine dans `canonical`, les balises Open Graph, `robots.txt` et `sitemap.xml`. Vérifier les conditions et limites du plan choisi.
 
-## Commande en ligne / click and collect
-
-La section `#commande` propose un panier côté navigateur avec filtres par catégorie, ajout et retrait d’articles, choix retrait ou livraison, date, créneau et coordonnées. Les prix restent des marqueurs `[XX €]` pour éviter d’inventer les tarifs. Le bouton final est une demande de commande : aucun paiement n’est activé. Pour la production, connecter le formulaire à un backend ou à un service de commande, puis ajouter un prestataire de paiement si nécessaire.
-
-Un aperçu visuel a été généré dans `le-petit-bistro-preview.png` à la racine de l’environnement de travail.
-
-## Avis clients et contact
-
-La section `#avis` contient trois cartes d’avis avec marqueurs visibles à remplacer par des témoignages vérifiés et autorisés. Aucun avis n’est présenté comme réel par défaut.
-
-La section `#contact` contient un formulaire indépendant de la réservation et de la commande : nom, e-mail, sujet et message. Remplacer `[À REMPLACER : identifiant-contact]` par un formulaire Formspree ou connecter un service backend équivalent.
+Consulter `GUIDE_CLIENT.md` pour le mode d’emploi détaillé destiné à la vente et à la livraison du site.

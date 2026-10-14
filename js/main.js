@@ -1,4 +1,87 @@
-const toggle=document.querySelector('.menu-toggle'),nav=document.querySelector('#main-nav');if(toggle&&nav){toggle.addEventListener('click',()=>{const open=nav.classList.toggle('is-open');toggle.setAttribute('aria-expanded',String(open));toggle.querySelector('b').textContent=open?'Fermer le menu':'Ouvrir le menu'});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');toggle.querySelector('b').textContent='Ouvrir le menu'}))}const bookingForm=document.querySelector('#booking-form'),bookingStatus=document.querySelector('#form-status');if(bookingForm&&bookingStatus){bookingForm.addEventListener('submit',e=>{e.preventDefault();bookingStatus.textContent='Votre demande est prête à être envoyée. Branchez Formspree pour recevoir les réservations.';const button=bookingForm.querySelector('button');button.textContent='Demande enregistrée';button.disabled=true;bookingForm.querySelectorAll('input,select,textarea').forEach(x=>x.disabled=true)})}
-const cart=[];const productCards=[...document.querySelectorAll('.product-card')],cartItems=document.querySelector('#cart-items'),cartCount=document.querySelector('#cart-count'),cartTotal=document.querySelector('#cart-total');function renderCart(){if(!cartItems)return;cartCount.textContent=`${cart.reduce((sum,item)=>sum+item.qty,0)} article${cart.reduce((sum,item)=>sum+item.qty,0)>1?'s':''}`;if(!cart.length){cartItems.innerHTML='<p class="cart-empty">Votre panier est vide.<br>Ajoutez une assiette pour commencer.</p>';cartTotal.textContent='Prix à compléter';return}cartItems.innerHTML=cart.map((item,index)=>`<div class="cart-line"><div><strong>${item.name}</strong><div class="cart-controls"><button type="button" data-cart-action="minus" data-index="${index}" aria-label="Retirer une unité">−</button><span>${item.qty}</span><button type="button" data-cart-action="plus" data-index="${index}" aria-label="Ajouter une unité">+</button></div></div><span>[XX €]</span></div>`).join('');cartTotal.textContent='Prix à compléter'}productCards.forEach(card=>card.querySelector('.add-product').addEventListener('click',()=>{const name=card.dataset.name;const found=cart.find(item=>item.name===name);if(found)found.qty++;else cart.push({name,qty:1});renderCart()}));cartItems?.addEventListener('click',event=>{const button=event.target.closest('[data-cart-action]');if(!button)return;const item=cart[Number(button.dataset.index)];if(button.dataset.cartAction==='plus')item.qty++;else item.qty--;if(item.qty<=0)cart.splice(Number(button.dataset.index),1);renderCart()});document.querySelectorAll('.order-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.order-tab').forEach(t=>t.classList.remove('is-active'));tab.classList.add('is-active');productCards.forEach(card=>card.classList.toggle('is-hidden',tab.dataset.filter!=='all'&&card.dataset.category!==tab.dataset.filter))}));const orderForm=document.querySelector('#order-form'),orderStatus=document.querySelector('#order-status'),deliveryAddress=document.querySelector('#delivery-address'),addressField=document.querySelector('#order-address'),fulfillmentInputs=document.querySelectorAll('input[name=fulfillment]');function syncDeliveryAddress(){const isDelivery=document.querySelector('input[name=fulfillment]:checked')?.value==='livraison';if(deliveryAddress){deliveryAddress.hidden=!isDelivery;addressField.required=isDelivery;if(!isDelivery)addressField.value=''}}fulfillmentInputs.forEach(input=>input.addEventListener('change',syncDeliveryAddress));syncDeliveryAddress();orderForm?.addEventListener('submit',event=>{event.preventDefault();if(!cart.length){orderStatus.textContent='Ajoutez au moins une assiette avant d’envoyer votre demande.';return}orderStatus.textContent='Votre demande est prête à être envoyée. Branchez un service de commande pour la transmettre au bistrot.';orderForm.querySelector('button').textContent='Demande enregistrée';orderForm.querySelector('button').disabled=true});renderCart();
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('#main-nav');
 
-const contactForm=document.querySelector('#contact-form'),contactStatus=document.querySelector('#contact-status');if(contactForm&&contactStatus){contactForm.addEventListener('submit',event=>{event.preventDefault();contactStatus.textContent='Votre message est prêt à être envoyé. Branchez Formspree pour recevoir les demandes.';const button=contactForm.querySelector('button');button.textContent='Demande enregistrée';button.disabled=true;contactForm.querySelectorAll('input,select,textarea').forEach(field=>field.disabled=true)})}
+if (toggle && nav) {
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('b').textContent = open ? 'Fermer le menu' : 'Ouvrir le menu';
+  });
+
+  nav.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.querySelector('b').textContent = 'Ouvrir le menu';
+    });
+  });
+}
+
+const cards = [...document.querySelectorAll('.project-card')];
+document.querySelectorAll('.filter-button').forEach((button) => {
+  button.addEventListener('click', () => {
+    document.querySelectorAll('.filter-button').forEach((item) => item.classList.remove('is-active'));
+    button.classList.add('is-active');
+    cards.forEach((card) => {
+      const shouldHide = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter;
+      card.classList.toggle('is-hidden', shouldHide);
+    });
+  });
+});
+
+const projectData = {
+  bistro: { type: 'Site vitrine', title: 'Le Petit Bistro', description: 'Une présence chaleureuse pour un lieu qui reçoit, avec carte, réservation et commande à emporter.', includes: 'Structure one-page, direction visuelle, carte interactive et formulaire de réservation.' },
+  atelier: { type: 'Identité de marque', title: 'Atelier Matière', description: 'Une identité sensible pour un savoir-faire précis, pensée pour fonctionner en ligne et sur les supports imprimés.', includes: 'Système de couleurs, typographies, logo de départ et page de présentation.' },
+  nord: { type: 'Boutique en ligne', title: 'Nord & Forme', description: 'Une vitrine e-commerce calme et orientée conversion, pour présenter une collection sans distraire de l’achat.', includes: 'Page catalogue, fiches produits, panier de départ et parcours de demande.' },
+  studio: { type: 'Portfolio', title: '[À REMPLACER : projet]', description: 'Un espace clair pour présenter un travail et recevoir des demandes qualifiées.', includes: 'Galerie de projets, filtres, modal de présentation et contact.' }
+};
+
+const modal = document.querySelector('#project-modal');
+const modalTitle = document.querySelector('#modal-title');
+const modalType = document.querySelector('#modal-type');
+const modalDescription = document.querySelector('#modal-description');
+const modalIncludes = document.querySelector('#modal-includes');
+const modalCta = document.querySelector('#modal-cta');
+
+function closeModal() {
+  if (!modal) return;
+  modal.hidden = true;
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('[data-project-open]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const data = projectData[button.dataset.projectOpen];
+    if (!data || !modal) return;
+    modalType.textContent = data.type;
+    modalTitle.textContent = data.title;
+    modalDescription.textContent = data.description;
+    modalIncludes.textContent = data.includes;
+    modalCta.href = '#contact';
+    modal.hidden = false;
+    document.querySelector('.modal-close').focus();
+  });
+});
+
+document.querySelectorAll('[data-modal-close]').forEach((item) => item.addEventListener('click', closeModal));
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeModal();
+});
+
+const form = document.querySelector('#contact-form');
+const status = document.querySelector('#contact-status');
+
+if (form && status) {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    status.textContent = 'Votre demande est prête à être envoyée. Branchez Formspree pour recevoir les projets.';
+    const button = form.querySelector('button');
+    button.textContent = 'Demande enregistrée';
+    button.disabled = true;
+    form.querySelectorAll('input, select, textarea').forEach((field) => { field.disabled = true; });
+  });
+}
