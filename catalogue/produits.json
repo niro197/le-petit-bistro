@@ -1,25 +1,329 @@
 {
-  "currency": "EUR",
-  "payment_mode": "quote",
+  "currency": "USD",
+  "payment_mode": "stripe_live_pending",
   "products": [
-    {"id":"ui-gradient-button","name":"UI Gradient Button","category":"Boutons","price_label":"Sur devis","stripe_payment_link":"","description":"Bouton d’action lumineux avec variantes de couleur et états accessibles.","deliverables":["HTML","CSS","Variantes","États hover et focus"],"preview":"gradient-button","featured":true},
-    {"id":"soft-button-set","name":"Soft Button Set","category":"Boutons","price_label":"Sur devis","stripe_payment_link":"","description":"Collection de boutons doux pour interfaces éditoriales, services et portfolios.","deliverables":["HTML","CSS","6 variantes","Documentation"],"preview":"gradient-button","featured":false},
-    {"id":"aurora-card","name":"Aurora Card","category":"Cartes UI","price_label":"Sur devis","stripe_payment_link":"","description":"Carte éditoriale avec halo aurora et structure facile à personnaliser.","deliverables":["HTML","CSS","Version responsive","Documentation"],"preview":"aurora-card","featured":true},
-    {"id":"glass-profile-card","name":"Glass Profile Card","category":"Cartes UI","price_label":"Sur devis","stripe_payment_link":"","description":"Carte de profil en verre dépoli pour créateur, équipe ou portfolio.","deliverables":["HTML","CSS","Avatar placeholder","Responsive"],"preview":"aurora-card","featured":false},
-    {"id":"product-card-kit","name":"Product Card Kit","category":"Cartes UI","price_label":"Sur devis","stripe_payment_link":"","description":"Cartes produit pour catalogue digital, boutique ou marketplace.","deliverables":["HTML","CSS","États de carte","Documentation"],"preview":"aurora-card","featured":false},
-    {"id":"motion-hero","name":"Motion Hero","category":"Heros","price_label":"Sur devis","stripe_payment_link":"","description":"Hero de landing page avec accroche, CTA et animation légère.","deliverables":["HTML","CSS","JavaScript léger","Adaptation mobile"],"preview":"motion-hero","featured":true},
-    {"id":"split-hero","name":"Split Hero","category":"Heros","price_label":"Sur devis","stripe_payment_link":"","description":"Hero en deux panneaux pour présenter une offre et une preuve visuelle.","deliverables":["HTML","CSS","Structure responsive","Guide d’intégration"],"preview":"motion-hero","featured":false},
-    {"id":"pricing-table","name":"Pricing Table","category":"Tarification","price_label":"Sur devis","stripe_payment_link":"","description":"Bloc de prix lisible avec offre recommandée et appels à l’action.","deliverables":["HTML","CSS","3 niveaux","États responsive"],"preview":"aurora-card","featured":false},
-    {"id":"comparison-table","name":"Comparison Table","category":"Tarification","price_label":"Sur devis","stripe_payment_link":"","description":"Tableau de comparaison pour expliquer clairement les différences entre offres.","deliverables":["HTML","CSS","Version mobile","Documentation"],"preview":"aurora-card","featured":false},
-    {"id":"dashboard-shell","name":"Dashboard Shell","category":"Dashboards","price_label":"Sur devis","stripe_payment_link":"","description":"Structure de dashboard avec navigation latérale, métriques et espace de contenu.","deliverables":["HTML","CSS","Navigation","Cartes métriques"],"preview":"motion-hero","featured":false},
-    {"id":"stats-widget","name":"Stats Widget","category":"Dashboards","price_label":"Sur devis","stripe_payment_link":"","description":"Widget de statistiques compact pour tableau de bord ou page SaaS.","deliverables":["HTML","CSS","Variantes","Responsive"],"preview":"aurora-card","featured":false},
-    {"id":"form-contact","name":"Contact Form UI","category":"Formulaires","price_label":"Sur devis","stripe_payment_link":"","description":"Formulaire de contact accessible avec champs, aide et état de confirmation.","deliverables":["HTML","CSS","Labels accessibles","États d’erreur"],"preview":"gradient-button","featured":false},
-    {"id":"checkout-form","name":"Checkout Form UI","category":"Formulaires","price_label":"Sur devis","stripe_payment_link":"","description":"Interface de commande claire à connecter à Stripe Checkout ou Payment Links.","deliverables":["HTML","CSS","Résumé commande","États de formulaire"],"preview":"gradient-button","featured":false},
-    {"id":"nav-mega-menu","name":"Mega Navigation","category":"Navigation","price_label":"Sur devis","stripe_payment_link":"","description":"Navigation riche pour site de services, catalogue ou plateforme.","deliverables":["HTML","CSS","JavaScript","Navigation clavier"],"preview":"motion-hero","featured":false},
-    {"id":"mobile-tab-bar","name":"Mobile Tab Bar","category":"Navigation","price_label":"Sur devis","stripe_payment_link":"","description":"Barre d’onglets mobile pour application web ou espace membre.","deliverables":["HTML","CSS","États actifs","Responsive"],"preview":"gradient-button","featured":false},
-    {"id":"badge-system","name":"Badge System","category":"Systèmes UI","price_label":"Sur devis","stripe_payment_link":"","description":"Système de badges et labels pour statuts, catégories et nouveautés.","deliverables":["HTML","CSS","12 variantes","Guide de couleurs"],"preview":"gradient-button","featured":false},
-    {"id":"testimonial-block","name":"Testimonial Block","category":"Preuves sociales","price_label":"Sur devis","stripe_payment_link":"","description":"Bloc d’avis ou de citation avec hiérarchie éditoriale et attribution.","deliverables":["HTML","CSS","Variantes","Responsive"],"preview":"aurora-card","featured":false},
-    {"id":"aurora-background","name":"Aurora Background","category":"Arrière-plans","price_label":"Sur devis","stripe_payment_link":"","description":"Fond aurora CSS léger pour donner de la profondeur à une section.","deliverables":["CSS","Variables de couleur","Version sombre","Documentation"],"preview":"aurora-card","featured":false},
-    {"id":"footer-system","name":"Footer System","category":"Pieds de page","price_label":"Sur devis","stripe_payment_link":"","description":"Pied de page structuré avec navigation, coordonnées et liens légaux.","deliverables":["HTML","CSS","4 colonnes","Mobile responsive"],"preview":"motion-hero","featured":false}
+    {
+      "id": "ui-gradient-button",
+      "name": "UI Gradient Button",
+      "category": "Boutons",
+      "price_label": "$10",
+      "stripe_payment_link": "",
+      "description": "Bouton d’action lumineux avec variantes de couleur et états accessibles.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Variantes",
+        "États hover et focus"
+      ],
+      "preview": "gradient-button",
+      "featured": true,
+      "price_usd": 10
+    },
+    {
+      "id": "soft-button-set",
+      "name": "Soft Button Set",
+      "category": "Boutons",
+      "price_label": "$12",
+      "stripe_payment_link": "",
+      "description": "Collection de boutons doux pour interfaces éditoriales, services et portfolios.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "6 variantes",
+        "Documentation"
+      ],
+      "preview": "gradient-button",
+      "featured": false,
+      "price_usd": 12
+    },
+    {
+      "id": "aurora-card",
+      "name": "Aurora Card",
+      "category": "Cartes UI",
+      "price_label": "$15",
+      "stripe_payment_link": "",
+      "description": "Carte éditoriale avec halo aurora et structure facile à personnaliser.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Version responsive",
+        "Documentation"
+      ],
+      "preview": "aurora-card",
+      "featured": true,
+      "price_usd": 15
+    },
+    {
+      "id": "glass-profile-card",
+      "name": "Glass Profile Card",
+      "category": "Cartes UI",
+      "price_label": "$18",
+      "stripe_payment_link": "",
+      "description": "Carte de profil en verre dépoli pour créateur, équipe ou portfolio.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Avatar placeholder",
+        "Responsive"
+      ],
+      "preview": "aurora-card",
+      "featured": false,
+      "price_usd": 18
+    },
+    {
+      "id": "product-card-kit",
+      "name": "Product Card Kit",
+      "category": "Cartes UI",
+      "price_label": "$20",
+      "stripe_payment_link": "",
+      "description": "Cartes produit pour catalogue digital, boutique ou marketplace.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "États de carte",
+        "Documentation"
+      ],
+      "preview": "aurora-card",
+      "featured": false,
+      "price_usd": 20
+    },
+    {
+      "id": "motion-hero",
+      "name": "Motion Hero",
+      "category": "Heros",
+      "price_label": "$22",
+      "stripe_payment_link": "",
+      "description": "Hero de landing page avec accroche, CTA et animation légère.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "JavaScript léger",
+        "Adaptation mobile"
+      ],
+      "preview": "motion-hero",
+      "featured": true,
+      "price_usd": 22
+    },
+    {
+      "id": "split-hero",
+      "name": "Split Hero",
+      "category": "Heros",
+      "price_label": "$25",
+      "stripe_payment_link": "",
+      "description": "Hero en deux panneaux pour présenter une offre et une preuve visuelle.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Structure responsive",
+        "Guide d’intégration"
+      ],
+      "preview": "motion-hero",
+      "featured": false,
+      "price_usd": 25
+    },
+    {
+      "id": "pricing-table",
+      "name": "Pricing Table",
+      "category": "Tarification",
+      "price_label": "$28",
+      "stripe_payment_link": "",
+      "description": "Bloc de prix lisible avec offre recommandée et appels à l’action.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "3 niveaux",
+        "États responsive"
+      ],
+      "preview": "aurora-card",
+      "featured": false,
+      "price_usd": 28
+    },
+    {
+      "id": "comparison-table",
+      "name": "Comparison Table",
+      "category": "Tarification",
+      "price_label": "$30",
+      "stripe_payment_link": "",
+      "description": "Tableau de comparaison pour expliquer clairement les différences entre offres.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Version mobile",
+        "Documentation"
+      ],
+      "preview": "aurora-card",
+      "featured": false,
+      "price_usd": 30
+    },
+    {
+      "id": "dashboard-shell",
+      "name": "Dashboard Shell",
+      "category": "Dashboards",
+      "price_label": "$32",
+      "stripe_payment_link": "",
+      "description": "Structure de dashboard avec navigation latérale, métriques et espace de contenu.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Navigation",
+        "Cartes métriques"
+      ],
+      "preview": "motion-hero",
+      "featured": false,
+      "price_usd": 32
+    },
+    {
+      "id": "stats-widget",
+      "name": "Stats Widget",
+      "category": "Dashboards",
+      "price_label": "$35",
+      "stripe_payment_link": "",
+      "description": "Widget de statistiques compact pour tableau de bord ou page SaaS.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Variantes",
+        "Responsive"
+      ],
+      "preview": "aurora-card",
+      "featured": false,
+      "price_usd": 35
+    },
+    {
+      "id": "form-contact",
+      "name": "Contact Form UI",
+      "category": "Formulaires",
+      "price_label": "$38",
+      "stripe_payment_link": "",
+      "description": "Formulaire de contact accessible avec champs, aide et état de confirmation.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Labels accessibles",
+        "États d’erreur"
+      ],
+      "preview": "gradient-button",
+      "featured": false,
+      "price_usd": 38
+    },
+    {
+      "id": "checkout-form",
+      "name": "Checkout Form UI",
+      "category": "Formulaires",
+      "price_label": "$40",
+      "stripe_payment_link": "",
+      "description": "Interface de commande claire à connecter à Stripe Checkout ou Payment Links.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Résumé commande",
+        "États de formulaire"
+      ],
+      "preview": "gradient-button",
+      "featured": false,
+      "price_usd": 40
+    },
+    {
+      "id": "nav-mega-menu",
+      "name": "Mega Navigation",
+      "category": "Navigation",
+      "price_label": "$42",
+      "stripe_payment_link": "",
+      "description": "Navigation riche pour site de services, catalogue ou plateforme.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Navigation clavier"
+      ],
+      "preview": "motion-hero",
+      "featured": false,
+      "price_usd": 42
+    },
+    {
+      "id": "mobile-tab-bar",
+      "name": "Mobile Tab Bar",
+      "category": "Navigation",
+      "price_label": "$45",
+      "stripe_payment_link": "",
+      "description": "Barre d’onglets mobile pour application web ou espace membre.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "États actifs",
+        "Responsive"
+      ],
+      "preview": "gradient-button",
+      "featured": false,
+      "price_usd": 45
+    },
+    {
+      "id": "badge-system",
+      "name": "Badge System",
+      "category": "Systèmes UI",
+      "price_label": "$48",
+      "stripe_payment_link": "",
+      "description": "Système de badges et labels pour statuts, catégories et nouveautés.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "12 variantes",
+        "Guide de couleurs"
+      ],
+      "preview": "gradient-button",
+      "featured": false,
+      "price_usd": 48
+    },
+    {
+      "id": "testimonial-block",
+      "name": "Testimonial Block",
+      "category": "Preuves sociales",
+      "price_label": "$50",
+      "stripe_payment_link": "",
+      "description": "Bloc d’avis ou de citation avec hiérarchie éditoriale et attribution.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "Variantes",
+        "Responsive"
+      ],
+      "preview": "aurora-card",
+      "featured": false,
+      "price_usd": 50
+    },
+    {
+      "id": "aurora-background",
+      "name": "Aurora Background",
+      "category": "Arrière-plans",
+      "price_label": "$24",
+      "stripe_payment_link": "",
+      "description": "Fond aurora CSS léger pour donner de la profondeur à une section.",
+      "deliverables": [
+        "CSS",
+        "Variables de couleur",
+        "Version sombre",
+        "Documentation"
+      ],
+      "preview": "aurora-card",
+      "featured": false,
+      "price_usd": 24
+    },
+    {
+      "id": "footer-system",
+      "name": "Footer System",
+      "category": "Pieds de page",
+      "price_label": "$27",
+      "stripe_payment_link": "",
+      "description": "Pied de page structuré avec navigation, coordonnées et liens légaux.",
+      "deliverables": [
+        "HTML",
+        "CSS",
+        "4 colonnes",
+        "Mobile responsive"
+      ],
+      "preview": "motion-hero",
+      "featured": false,
+      "price_usd": 27
+    }
   ]
 }
